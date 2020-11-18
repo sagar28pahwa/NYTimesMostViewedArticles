@@ -11,6 +11,94 @@ import XCTest
 
 class NYTimesMostViewedArticlesTests: XCTestCase {
 
+    var viewModel: NYTimesMostViewedArticleViewModel!
+    var session: URLSession!
     
+    var client = NetworkClientMock(response: nil)
+    
+    override func setUpWithError() throws {
+        session = URLSession(configuration: URLSessionConfiguration.default)
+        viewModel = NYTimesMostViewedArticleViewModel(networkClient: client)
+    }
+    
+    override func tearDownWithError() throws {
+        session = nil
+        client.response = nil
+        viewModel = nil
+    }
+    
+    func testAPISuccess() {
+        
+        let url = client.url(period: .day)
+        
+        let promise = expectation(description: "Status code: 200")
+        
+        let dataTask = session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                XCTFail("Error: \(error.localizedDescription)")
+                return
+            } else if let statusCode = (response as? HTTPURLResponse)?.statusCode {
+                if statusCode == 200 {
+                    promise.fulfill()
+                } else {
+                    XCTFail("Status code: \(statusCode)")
+                }
+            }
+        }
+        dataTask.resume()
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testAPIFail() {
+        
+        let url = client.mockFailURL(period: .day)
+        
+        let promise = expectation(description: "Completion handler invoked")
+        var statusCode: Int?
+        var responseError: Error?
+        
+        let dataTask = session.dataTask(with: url) { data, response, error in
+            statusCode = (response as? HTTPURLResponse)?.statusCode
+            responseError = error
+            promise.fulfill()
+        }
+        dataTask.resume()
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNil(responseError)
+        XCTAssertEqual(statusCode, 401)
+    }
+    
+    func testClientMockSuccess() {
+        guard let urlPath = Bundle(for: NYTimesMostViewedArticlesTests.self).url(forResource: "MockArticles", withExtension: "json"), let jsonData = try? Data(contentsOf: urlPath) else {
+            XCTFail("JSON file is missing")
+            return
+        }
+        let promise = expectation(description: "Completion handler invoked")
+        do {
+            let decoder = JSONDecoder()
+            let articleResult = try decoder.decode(Response.self, from: jsonData)
+            
+            XCTAssertEqual(articleResult.results?.first?.section, "U.S.")
+            XCTAssertNotEqual(articleResult.results?.first?.publishedDate, "2018-06-06.")
+            client.response = articleResult
+            viewModel.fetchMostViewArticles { (error) in
+               XCTAssertNil(error)
+                if self.viewModel.articles.first?._id == 100000005964396 {
+                    promise.fulfill()
+                }
+            }
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
+        waitForExpectations(timeout: 10, handler: nil)
+    }
+    
+    func testClientError() {
+        viewModel.fetchMostViewArticles { (error) in
+            XCTAssertNotNil(error as? MockErrors)
+        }
+    }
 
 }

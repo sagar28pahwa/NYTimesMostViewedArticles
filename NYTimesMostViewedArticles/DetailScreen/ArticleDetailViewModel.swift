@@ -8,6 +8,20 @@
 
 import Foundation
 
+protocol UIViewControllerType: AnyObject {
+    func push(vc: UIViewControllerType, animated: Bool)
+}
+
+protocol ArticleRepresentable {
+    var title: String? { get }
+    var author: String? { get }
+    var date: String? { get}
+}
+
+protocol ArticleDetailView: UIViewControllerType {
+    var viewModel: ArticleDetailViewModel! { get set }
+}
+
 class ArticleDetailViewModel {
     
     let article: ArticleRepresentable

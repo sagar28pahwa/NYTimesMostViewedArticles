@@ -8,12 +8,6 @@
 
 import UIKit
 
-protocol ArticleRepresentable {
-    var title: String? { get }
-    var author: String? { get }
-    var date: String? { get}
-}
-
 class ViewedArticleCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!

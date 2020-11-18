@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ArticleDetailVC: UIViewController {
+class ArticleDetailVC: UIViewController, ArticleDetailView {
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var source: UILabel!

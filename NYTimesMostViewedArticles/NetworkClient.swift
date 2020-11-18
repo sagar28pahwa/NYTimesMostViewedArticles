@@ -10,10 +10,13 @@ import Foundation
 
 protocol NetworkClientType {
     func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?)->())
+    
+    func url(period: PeriodSection) -> URL
 }
 
 enum Keys: String {
     case nyTimesKey = "yxPlqAEPWW3qKi0BgofuzzXeEbxkGfj4"
+    case mockKey = "1234567890"
 }
 
 enum PeriodSection: Int {
@@ -22,18 +25,30 @@ enum PeriodSection: Int {
     case month = 30
 }
 
+struct API {
+    static let baseURL = "http://api.nytimes.com/"
+    static let contentURL = "svc/mostpopular/v2/viewed"
+        //"svc/mostpopular/v2/mostviewed/all-sections/"
+}
+
+
 typealias closure = ()
 
+extension NetworkClientType {
+    func url(period: PeriodSection) -> URL {
+        let string = "\(API.baseURL)/\(API.contentURL)/\(period.rawValue).json?api-key=\(Keys.nyTimesKey.rawValue)"
+        return URL(string: string)!
+    }
+}
+
 class NetworkClient: NetworkClientType {
+    
     let session = URLSession.shared
     
+
     func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?)->()) {
-        let string = "http://api.nytimes.com/svc/mostpopular/v2/viewed/\(period.rawValue).json?api-key=\(Keys.nyTimesKey.rawValue)"
-        let url = URL(string: string)!
 
-            //)!
-
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: self.url(period: period))
         request.httpMethod = "GET"
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             guard let data = data else {

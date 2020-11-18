@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol UIViewControllerType {
-    func push(vc: UIViewControllerType, animated: Bool)
-}
-
 extension UIViewController: UIViewControllerType {
     func push(vc: UIViewControllerType, animated: Bool) {
         if let vc = vc as? UIViewController {

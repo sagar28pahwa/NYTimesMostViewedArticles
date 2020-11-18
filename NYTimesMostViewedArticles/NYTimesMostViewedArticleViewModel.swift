@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-
-
 extension ViewedArticle: ArticleRepresentable {
     var author: String? {
         return self.source
@@ -35,8 +33,8 @@ class NYTimesMostViewedArticleViewModel {
     func fetchMostViewArticles(completion: @escaping (Error?)->()) {
         self.networkClient.getMostViewedArticles(period: .day) { (response, error) in
             if let articleResults = response?.results {
-                self.articles = articleResults
                 DispatchQueue.main.async {
+                    self.articles = articleResults
                     completion(nil)
                 }
             }
@@ -47,7 +45,7 @@ class NYTimesMostViewedArticleViewModel {
     }
     
     func showDetailScreen(index: Int, source: UIViewControllerType) {
-        if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailVC {
+        if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailView {
             articleDetailVC.viewModel = ArticleDetailViewModel(article: self.articles[index])
             source.push(vc: articleDetailVC, animated: true)
         }
