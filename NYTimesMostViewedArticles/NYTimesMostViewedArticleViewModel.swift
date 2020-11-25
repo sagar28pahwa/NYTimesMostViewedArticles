@@ -22,16 +22,16 @@ extension ViewedArticle: ArticleRepresentable {
 
 class NYTimesMostViewedArticleViewModel {
     
-    let networkClient: NetworkClientType
+    let api: ArticlesAPIType
     
     private(set) var articles = [ViewedArticle]()
     
-    init(networkClient: NetworkClientType) {
-        self.networkClient = networkClient
+    init(api: ArticlesAPIType) {
+        self.api = api
     }
     
     func fetchMostViewArticles(completion: @escaping (Error?)->()) {
-        self.networkClient.getMostViewedArticles(period: .day) { (response, error) in
+        self.api.getMostViewedArticles(period: .day) { (response, error) in
             if let articleResults = response?.results {
                 DispatchQueue.main.async {
                     self.articles = articleResults

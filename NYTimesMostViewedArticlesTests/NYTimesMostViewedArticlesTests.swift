@@ -13,23 +13,25 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
 
     var viewModel: NYTimesMostViewedArticleViewModel!
     var session: URLSession!
-    
     var client = NetworkClientMock(response: nil)
+    var api: ArticlesAPI!
     
     override func setUpWithError() throws {
         session = URLSession(configuration: URLSessionConfiguration.default)
-        viewModel = NYTimesMostViewedArticleViewModel(networkClient: client)
+        api = ArticlesAPI(client: client)
+        viewModel = NYTimesMostViewedArticleViewModel(api: api)
     }
     
     override func tearDownWithError() throws {
         session = nil
-        client.response = nil
+        client.mockResponse = nil
+        api = nil
         viewModel = nil
     }
     
     func testAPISuccess() {
         
-        let url = client.url(period: .day)
+        let url = api.url(period: .day)
         
         let promise = expectation(description: "Status code: 200")
         
@@ -81,7 +83,7 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
             
             XCTAssertEqual(articleResult.results?.first?.section, "U.S.")
             XCTAssertNotEqual(articleResult.results?.first?.publishedDate, "2018-06-06.")
-            client.response = articleResult
+            client.mockResponse = articleResult
             viewModel.fetchMostViewArticles { (error) in
                XCTAssertNil(error)
                 if self.viewModel.articles.first?._id == 100000005964396 {

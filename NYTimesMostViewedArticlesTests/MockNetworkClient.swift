@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@testable import NYTimesMostViewedArticles
 
 enum MockErrors: Error {
     case noMockData
@@ -14,14 +15,14 @@ enum MockErrors: Error {
 
 class NetworkClientMock: NetworkClientType {
     
-    var response: Response?
+    var mockResponse: Response?
     
     init(response: Response?) {
-        self.response = response
+        self.mockResponse = response
     }
     
-    func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?) -> ()) {
-        if let response = response {
+    func fetchResponse<T>(for request: URLRequest, completion: @escaping (T?, Error?) -> ()) where T : Codable {
+        if let response = (mockResponse as? T) {
             completion(response, nil)
         }
         else {
