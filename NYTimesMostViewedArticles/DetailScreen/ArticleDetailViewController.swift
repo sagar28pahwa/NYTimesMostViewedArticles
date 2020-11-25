@@ -19,12 +19,12 @@ class ArticleDetailViewController: UIViewController, ArticleDetailView {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.configUI()
+        configUI()
     }
 
     func configUI() {
-        self.titleLabel.text = self.viewModel.title()
-        self.source.text = self.viewModel.source()
-        self.date.text = self.viewModel.date()
+        titleLabel.text = viewModel.title()
+        source.text = viewModel.source()
+        date.text = viewModel.date()
     }
 }

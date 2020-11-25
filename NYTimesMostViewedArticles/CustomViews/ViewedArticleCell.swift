@@ -15,8 +15,8 @@ class ViewedArticleCell: UITableViewCell {
     @IBOutlet private weak var publishedDateLabel: UILabel!
     
     func configUI(model: ArticleRepresentable) {
-        self.titleLabel.text = model.title
-        self.byNameLabel.text = model.author
-        self.publishedDateLabel.text = model.date
+        titleLabel.text = model.title
+        byNameLabel.text = model.author
+        publishedDateLabel.text = model.date
     }
 }

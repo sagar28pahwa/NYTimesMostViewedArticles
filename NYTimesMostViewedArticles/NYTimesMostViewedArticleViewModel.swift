@@ -11,11 +11,11 @@ import UIKit
 
 extension ViewedArticle: ArticleRepresentable {
     var author: String? {
-        return self.source
+        return source
     }
     
     var date: String? {
-        return self.publishedDate
+        return publishedDate
     }
 }
 
@@ -31,10 +31,10 @@ class NYTimesMostViewedArticleViewModel {
     }
     
     func fetchMostViewArticles(completion: @escaping (Error?)->()) {
-        self.api.getMostViewedArticles(period: .day) { (response, error) in
+        api.getMostViewedArticles(period: .day) { [weak self] (response, error) in
             if let articleResults = response?.results {
                 DispatchQueue.main.async {
-                    self.articles = articleResults
+                    self?.articles = articleResults
                     completion(nil)
                 }
             }
@@ -46,7 +46,7 @@ class NYTimesMostViewedArticleViewModel {
     
     func showDetailScreen(index: Int, source: UIViewControllerType) {
         if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailView {
-            articleDetailVC.viewModel = ArticleDetailViewModel(article: self.articles[index])
+            articleDetailVC.viewModel = ArticleDetailViewModel(article: articles[index])
             source.push(vc: articleDetailVC, animated: true)
         }
     }

@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController: UIViewControllerType {
     func push(vc: UIViewControllerType, animated: Bool) {
         if let vc = vc as? UIViewController {
-            self.navigationController?.pushViewController(vc, animated: animated)
+            navigationController?.pushViewController(vc, animated: animated)
         }
     }
 }
@@ -28,18 +28,18 @@ class NYTimesMostViewedArticleVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        self.configUI()
-        self.fetchMostViewedArticles()
+        configUI()
+        fetchMostViewedArticles()
     }
     
     func configUI() {
-        self.tableView.register(UINib(nibName: cellNibName, bundle: Bundle.init(for: ViewedArticleCell.self)), forCellReuseIdentifier: cellNibName)
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        tableView.register(UINib(nibName: cellNibName, bundle: Bundle.init(for: ViewedArticleCell.self)), forCellReuseIdentifier: cellNibName)
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     func fetchMostViewedArticles() {
-        self.viewModel.fetchMostViewArticles { [weak self] (error) in
+        viewModel.fetchMostViewArticles { [weak self] (error) in
             if let error = error {
                 //present error
                 let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
@@ -54,18 +54,18 @@ class NYTimesMostViewedArticleVC: UIViewController {
 
 extension NYTimesMostViewedArticleVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.articles.count
+        return viewModel.articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ViewedArticleCell", for: indexPath) as! ViewedArticleCell
-        cell.configUI(model: self.viewModel.articles[indexPath.row])
+        cell.configUI(model: viewModel.articles[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.viewModel.showDetailScreen(index: indexPath.row, source: self)
+        viewModel.showDetailScreen(index: indexPath.row, source: self)
     }
 }
 

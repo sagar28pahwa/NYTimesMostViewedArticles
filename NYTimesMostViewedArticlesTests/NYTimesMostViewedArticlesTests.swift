@@ -86,7 +86,7 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
             client.mockResponse = articleResult
             viewModel.fetchMostViewArticles { (error) in
                XCTAssertNil(error)
-                if self.viewModel.articles.first?._id == 100000005964396 {
+                if viewModel.articles.first?._id == 100000005964396 {
                     promise.fulfill()
                 }
             }

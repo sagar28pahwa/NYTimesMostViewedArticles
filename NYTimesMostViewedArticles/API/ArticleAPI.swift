@@ -27,9 +27,9 @@ class ArticlesAPI: ArticlesAPIType {
     }
     
     func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?)->()) {
-        var request = URLRequest(url: self.url(period: period))
+        var request = URLRequest(url: url(period: period))
         request.httpMethod = "GET"
-        self.client.fetchResponse(for: request) { (response: Response?, error) in
+        client.fetchResponse(for: request) { (response: Response?, error) in
             completion(response, error)
         }
     }

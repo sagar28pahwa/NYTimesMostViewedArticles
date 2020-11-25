@@ -31,14 +31,14 @@ class ArticleDetailViewModel {
     }
     
     func title() -> String? {
-        return self.article.title
+        return article.title
     }
     
     func source() -> String? {
-        return self.article.author
+        return article.author
     }
     
     func date() -> String? {
-        return self.article.date
+        return article.date
     }
 }
