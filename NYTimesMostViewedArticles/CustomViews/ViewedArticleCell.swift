@@ -10,21 +10,9 @@ import UIKit
 
 class ViewedArticleCell: UITableViewCell {
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var byNameLabel: UILabel!
-    @IBOutlet weak var publishedDateLabel: UILabel!
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var byNameLabel: UILabel!
+    @IBOutlet private weak var publishedDateLabel: UILabel!
     
     func configUI(model: ArticleRepresentable) {
         self.titleLabel.text = model.title

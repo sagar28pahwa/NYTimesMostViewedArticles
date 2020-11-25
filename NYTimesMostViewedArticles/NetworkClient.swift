@@ -60,7 +60,6 @@ class NetworkClient: NetworkClientType {
                 return
             }
             guard let mime = response?.mimeType, mime == "application/json" else {
-                print("Wrong MIME type!")
                 return
             }
             do {
