@@ -1,8 +1,7 @@
 //
-//  ArticleDetailVC.swift
+//  ArticleDetailViewController.swift
 //  NYTimesMostViewedArticles
 //
-//  Created by Sagar Pahwa on 17/11/20.
 //  Copyright © 2020 Sagar Pahwa. All rights reserved.
 //
 
@@ -20,11 +19,21 @@ class ArticleDetailViewController: UIViewController, ArticleDetailView {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configUI()
+        configAccessibility()
     }
 
     func configUI() {
         titleLabel.text = viewModel.title()
         source.text = viewModel.source()
         date.text = viewModel.date()
+        titleLabel.accessibilityIdentifier = "titleLabel"
+        source.accessibilityIdentifier = "sourceLabel"
+        date.accessibilityIdentifier = "dateLabel"
+    }
+    
+    func configAccessibility() {
+        titleLabel.isAccessibilityElement = true
+        source.isAccessibilityElement = true
+        date.isAccessibilityElement = true
     }
 }

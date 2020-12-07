@@ -2,7 +2,6 @@
 //  NYTimesMostViewedArticleVC.swift
 //  NYTimesMostViewedArticles
 //
-//  Created by Sagar Pahwa on 17/11/20.
 //  Copyright © 2020 Sagar Pahwa. All rights reserved.
 //
 
@@ -16,9 +15,11 @@ extension UIViewController: UIViewControllerType {
     }
 }
 
-class NYTimesMostViewedArticleVC: UIViewController {
+class NYTimesMostViewedArticleViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     let cellNibName = "ViewedArticleCell"
     
     lazy var viewModel: NYTimesMostViewedArticleViewModel = {
@@ -36,12 +37,16 @@ class NYTimesMostViewedArticleVC: UIViewController {
         tableView.register(UINib(nibName: cellNibName, bundle: Bundle.init(for: ViewedArticleCell.self)), forCellReuseIdentifier: cellNibName)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isAccessibilityElement = true
+        tableView.accessibilityLabel = "ViewedArticleTableView"
+        activityIndicator.hidesWhenStopped = true
     }
     
     func fetchMostViewedArticles() {
+        startShowingLoading()
         viewModel.fetchMostViewArticles { [weak self] (error) in
+            self?.stopShowingLoading()
             if let error = error {
-                //present error
                 let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                 self?.present(alert, animated: true, completion: nil)
             }
@@ -50,15 +55,24 @@ class NYTimesMostViewedArticleVC: UIViewController {
             }
         }
     }
+    
+    func startShowingLoading() {
+        self.activityIndicator.startAnimating()
+    }
+    
+    func stopShowingLoading() {
+        activityIndicator.stopAnimating()
+    }
 }
 
-extension NYTimesMostViewedArticleVC: UITableViewDelegate, UITableViewDataSource {
+extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.articles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ViewedArticleCell", for: indexPath) as! ViewedArticleCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellNibName, for: indexPath) as! ViewedArticleCell
+        cell.accessibilityLabel = "\(cellNibName)_\(indexPath.row)"
         cell.configUI(model: viewModel.articles[indexPath.row])
         return cell
     }

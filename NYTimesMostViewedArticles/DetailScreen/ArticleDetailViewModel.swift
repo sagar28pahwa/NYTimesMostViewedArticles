@@ -2,7 +2,6 @@
 //  ArticleDetailViewModel.swift
 //  NYTimesMostViewedArticles
 //
-//  Created by Sagar Pahwa on 17/11/20.
 //  Copyright © 2020 Sagar Pahwa. All rights reserved.
 //
 
@@ -15,7 +14,7 @@ protocol UIViewControllerType: AnyObject {
 protocol ArticleRepresentable {
     var title: String? { get }
     var author: String? { get }
-    var date: String? { get}
+    var date: String? { get }
 }
 
 protocol ArticleDetailView: UIViewControllerType {

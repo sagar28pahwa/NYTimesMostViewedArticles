@@ -2,7 +2,6 @@
 //  MockClass.swift
 //  NYTimesMostViewedArticlesTests
 //
-//  Created by Sagar Pahwa on 18/11/20.
 //  Copyright © 2020 Sagar Pahwa. All rights reserved.
 //
 
@@ -13,11 +12,11 @@ enum MockErrors: Error {
     case noMockData
 }
 
-class NetworkClientMock: NetworkClientType {
+class NetworkClientMock {
     
-    var mockResponse: Response?
+    var mockResponse: Codable?
     
-    init(response: Response?) {
+    init(response: Codable?) {
         self.mockResponse = response
     }
     
@@ -28,10 +27,5 @@ class NetworkClientMock: NetworkClientType {
         else {
             completion(nil, MockErrors.noMockData)
         }
-    }
-    
-    func mockFailURL(period: PeriodSection) -> URL {
-        let string = "\(API.baseURL)/\(API.contentURL)/\(period.rawValue).json?api-key=\(Keys.mockKey.rawValue)"
-        return URL(string: string)!
     }
 }

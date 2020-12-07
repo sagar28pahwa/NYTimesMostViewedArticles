@@ -2,7 +2,6 @@
 //  NetworkClient.swift
 //  NYTimesMostViewedArticles
 //
-//  Created by Sagar Pahwa on 17/11/20.
 //  Copyright © 2020 Sagar Pahwa. All rights reserved.
 //
 
@@ -29,7 +28,7 @@ struct API {
         //"svc/mostpopular/v2/mostviewed/all-sections/"
 }
 
-enum ParsingError: Error {
+enum NetworkClientError: Error {
     case unexpectedMime
     case dataMissing
     case failure
@@ -37,26 +36,26 @@ enum ParsingError: Error {
 
 class NetworkClient: NetworkClientType {
     
-    let session = URLSession.shared
+    private let config = Config.shared
     
     func fetchResponse<T: Codable>(for request: URLRequest, completion: @escaping (T?, Error?)->()) {
         
-        let task = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task = config.urlSession().dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 completion(nil, error)
             }
             else {
                 guard let data = data else {
-                    completion(nil, ParsingError.dataMissing)
+                    completion(nil, NetworkClientError.dataMissing)
                     return
                 }
                 guard let httpResponse = response as? HTTPURLResponse,
                       (200...299).contains(httpResponse.statusCode) else {
-                    completion(nil, ParsingError.failure)
+                    completion(nil, NetworkClientError.failure)
                     return
                 }
                 guard let mime = response?.mimeType, mime == "application/json" else {
-                    completion(nil, ParsingError.unexpectedMime)
+                    completion(nil, NetworkClientError.unexpectedMime)
                     return
                 }
                 do {

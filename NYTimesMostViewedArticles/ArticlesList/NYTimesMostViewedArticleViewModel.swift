@@ -2,7 +2,6 @@
 //  NYTimesMostViewedArticleViewModel.swift
 //  NYTimesMostViewedArticles
 //
-//  Created by Sagar Pahwa on 17/11/20.
 //  Copyright © 2020 Sagar Pahwa. All rights reserved.
 //
 
@@ -32,15 +31,15 @@ class NYTimesMostViewedArticleViewModel {
     
     func fetchMostViewArticles(completion: @escaping (Error?)->()) {
         api.getMostViewedArticles(period: .day) { [weak self] (response, error) in
-            if let articleResults = response?.results {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+             if let articleResults = response?.results {
                     self?.articles = articleResults
                     completion(nil)
-                }
-            }
-            else if let error = error {
+             }
+             else if let error = error {
                 completion(error)
-            }
+             }
+           }
         }
     }
     

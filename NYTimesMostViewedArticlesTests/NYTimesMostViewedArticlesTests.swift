@@ -2,7 +2,6 @@
 //  NYTimesMostViewedArticlesTests.swift
 //  NYTimesMostViewedArticlesTests
 //
-//  Created by Sagar Pahwa on 17/11/20.
 //  Copyright © 2020 Sagar Pahwa. All rights reserved.
 //
 
@@ -31,7 +30,7 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
     
     func testAPISuccess() {
         
-        let url = api.url(period: .day)
+        let url = ArticlesAPI.url(period: .day)
         
         let promise = expectation(description: "Status code: 200")
         
@@ -86,7 +85,7 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
             client.mockResponse = articleResult
             viewModel.fetchMostViewArticles { (error) in
                XCTAssertNil(error)
-                if viewModel.articles.first?._id == 100000005964396 {
+                if self.viewModel.articles.first?._id == 100000005964396 {
                     promise.fulfill()
                 }
             }
@@ -102,5 +101,13 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
             XCTAssertNotNil(error as? MockErrors)
         }
     }
-
 }
+
+extension NetworkClientMock: NetworkClientType {
+    
+    func mockFailURL(period: PeriodSection) -> URL {
+        let string = "\(API.baseURL)/\(API.contentURL)/\(period.rawValue).json?api-key=\(Keys.mockKey.rawValue)"
+        return URL(string: string)!
+    }
+}
+
