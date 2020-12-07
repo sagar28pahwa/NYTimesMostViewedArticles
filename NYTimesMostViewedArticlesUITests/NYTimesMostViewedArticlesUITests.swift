@@ -68,4 +68,18 @@ class NYTimesMostViewedArticlesUITests: XCTestCase {
         XCTAssertEqual(detailSourceLabel.label, publishedBy)
         XCTAssertEqual(detailDateLabel.label, date)
     }
+    
+    func testTriggerErrorGetArticleList() {
+        app.launchArguments = ["UI-TESTING"]
+        app.launch()
+        var alertDismissed = false
+        addUIInterruptionMonitor(withDescription: "System Dialog") { (alert) -> Bool in
+            alert.buttons.element(boundBy: 0).tap()
+            alertDismissed = true
+            return true
+        }
+        XCTAssertFalse(alertDismissed)
+        app.tap()
+        XCTAssertTrue(alertDismissed)
+    }
 }

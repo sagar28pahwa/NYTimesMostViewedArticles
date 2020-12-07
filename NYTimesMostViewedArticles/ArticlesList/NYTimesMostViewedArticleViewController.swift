@@ -38,7 +38,7 @@ class NYTimesMostViewedArticleViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isAccessibilityElement = true
-        tableView.accessibilityLabel = "ViewedArticleTableView"
+        tableView.accessibilityIdentifier = "ViewedArticleTableView"
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = .large
     }
@@ -49,6 +49,8 @@ class NYTimesMostViewedArticleViewController: UIViewController {
             self?.stopShowingLoading()
             if let error = error {
                 let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alert.addAction(alertAction)
                 self?.present(alert, animated: true, completion: nil)
             }
             else {
