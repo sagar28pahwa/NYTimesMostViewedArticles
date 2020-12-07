@@ -39,6 +39,7 @@ class NYTimesMostViewedArticleViewController: UIViewController {
         tableView.dataSource = self
         tableView.isAccessibilityElement = true
         tableView.accessibilityIdentifier = "ViewedArticleTableView"
+        tableView.tableFooterView = UIView(frame: .zero)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = .large
     }
