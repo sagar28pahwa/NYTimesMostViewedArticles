@@ -42,11 +42,4 @@ class NYTimesMostViewedArticleViewModel {
            }
         }
     }
-    
-    func showDetailScreen(index: Int, source: UIViewControllerType) {
-        if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailView {
-            articleDetailVC.viewModel = ArticleDetailViewModel(article: articles[index])
-            source.push(vc: articleDetailVC, animated: true)
-        }
-    }
 }

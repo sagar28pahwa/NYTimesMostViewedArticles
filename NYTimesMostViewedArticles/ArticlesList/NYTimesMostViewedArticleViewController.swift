@@ -48,16 +48,23 @@ class NYTimesMostViewedArticleViewController: UIViewController {
         startShowingLoading()
         viewModel.fetchMostViewArticles { [weak self] (error) in
             self?.stopShowingLoading()
-            if let error = error {
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alert.addAction(alertAction)
-                self?.present(alert, animated: true, completion: nil)
+            if let error = error as? MockErrors {
+                self?.showAlert(message: error.localizedDescription)
+            }
+            else if let error = error {
+                self?.showAlert(message: error.localizedDescription)
             }
             else {
                 self?.tableView.reloadData()
             }
         }
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(alertAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func startShowingLoading() {
@@ -83,7 +90,10 @@ extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.showDetailScreen(index: indexPath.row, source: self)
+        if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailView {
+            articleDetailVC.viewModel = ArticleDetailViewModel(article: viewModel.articles[indexPath.row])
+            push(vc: articleDetailVC, animated: true)
+        }
     }
 }
 
