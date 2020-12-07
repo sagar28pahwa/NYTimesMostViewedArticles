@@ -8,10 +8,6 @@
 import Foundation
 @testable import NYTimesMostViewedArticles
 
-enum MockErrors: Error {
-    case noMockData
-}
-
 class NetworkClientMock {
     
     var mockResponse: Codable?

@@ -35,7 +35,7 @@ class NYTimesMostViewedArticlesUITests: XCTestCase {
     }
 
     func testViewListAndDetail() throws {
-        guard let data = self.getData() else {
+        guard let data = getData() else {
             return
         }
         app.launchArguments = ["UI-TESTING"]

@@ -7,6 +7,14 @@
 
 import Foundation
 
+enum MockErrors: Error {
+    case noMockData
+    
+    var localizedDescription: String {
+        return "Something Went Wrong"
+    }
+}
+
 class Config {
     static let shared = Config.init()
     
@@ -46,12 +54,15 @@ class URLProtocolMock: URLProtocol {
         if let dataString = ProcessInfo.processInfo.environment["MockResponse"] {
             
             if let response = HTTPURLResponse(url: ArticlesAPI.url(period: .day), statusCode: 200, httpVersion: nil, headerFields: ["Content-Type": "application/json"]) {
-            self.client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         }
         
-        self.client?.urlProtocol(self, didLoad: Data(dataString.utf8))
+        client?.urlProtocol(self, didLoad: Data(dataString.utf8))
         }
-        self.client?.urlProtocolDidFinishLoading(self)
+        else {
+            client?.urlProtocol(self, didFailWithError: MockErrors.noMockData)
+        }
+        client?.urlProtocolDidFinishLoading(self)
     }
     
     override func stopLoading() {

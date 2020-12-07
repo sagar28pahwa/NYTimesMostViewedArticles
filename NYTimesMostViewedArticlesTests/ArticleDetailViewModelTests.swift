@@ -13,7 +13,7 @@ class ArticleDetailViewModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        if let article = self.getArticle() {
+        if let article = getArticle() {
             viewModel = ArticleDetailViewModel(article: article)
         }
         else {
@@ -40,9 +40,9 @@ class ArticleDetailViewModelTests: XCTestCase {
     }
     
     func testViewDetail() {
-        XCTAssertEqual(self.viewModel.source(), "The New York Times")
-        XCTAssertEqual(self.viewModel.title(), "Trump Retreats on Separating Families, but Thousands May Remain Apart")
-        XCTAssertEqual(self.viewModel.date(), "2018-06-20")
+        XCTAssertEqual(viewModel.source(), "The New York Times")
+        XCTAssertEqual(viewModel.title(), "Trump Retreats on Separating Families, but Thousands May Remain Apart")
+        XCTAssertEqual(viewModel.date(), "2018-06-20")
     }
 
 }

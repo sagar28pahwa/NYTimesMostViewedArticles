@@ -40,6 +40,7 @@ class NYTimesMostViewedArticleViewController: UIViewController {
         tableView.isAccessibilityElement = true
         tableView.accessibilityLabel = "ViewedArticleTableView"
         activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = .large
     }
     
     func fetchMostViewedArticles() {
@@ -57,7 +58,7 @@ class NYTimesMostViewedArticleViewController: UIViewController {
     }
     
     func startShowingLoading() {
-        self.activityIndicator.startAnimating()
+        activityIndicator.startAnimating()
     }
     
     func stopShowingLoading() {

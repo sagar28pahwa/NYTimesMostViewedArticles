@@ -14,7 +14,7 @@ class ViewedArticleCell: UITableViewCell {
     @IBOutlet private weak var publishedDateLabel: UILabel!
     
     override func awakeFromNib() {
-        self.configAccessibility()
+        configAccessibility()
     }
     
     func configUI(model: ArticleRepresentable) {
@@ -25,13 +25,13 @@ class ViewedArticleCell: UITableViewCell {
     }
     
     func configAccessibility() {
-        self.titleLabel.isAccessibilityElement = true
-        self.titleLabel.accessibilityIdentifier = "ViewArticleCellTitle"
+        titleLabel.isAccessibilityElement = true
+        titleLabel.accessibilityIdentifier = "ViewArticleCellTitle"
         
-        self.byNameLabel.isAccessibilityElement = true
-        self.byNameLabel.accessibilityIdentifier = "ViewArticleCellSource"
+        byNameLabel.isAccessibilityElement = true
+        byNameLabel.accessibilityIdentifier = "ViewArticleCellSource"
         
-        self.publishedDateLabel.isAccessibilityElement = true
-        self.publishedDateLabel.accessibilityIdentifier = "ViewArticleCellPublishedDate"
+        publishedDateLabel.isAccessibilityElement = true
+        publishedDateLabel.accessibilityIdentifier = "ViewArticleCellPublishedDate"
     }
 }
