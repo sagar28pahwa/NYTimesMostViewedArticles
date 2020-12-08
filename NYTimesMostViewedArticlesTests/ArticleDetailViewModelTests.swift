@@ -32,7 +32,7 @@ class ArticleDetailViewModelTests: XCTestCase {
             return nil
         }
         do {
-            return try JSONDecoder().decode(Response.self, from: jsonData).results?.first
+            return try JSONDecoder().decode(MostViewedArticleResponse.self, from: jsonData).results?.first
         }
         catch {
             return nil

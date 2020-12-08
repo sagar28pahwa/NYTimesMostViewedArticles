@@ -78,9 +78,8 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
         let promise = expectation(description: "Completion handler invoked")
         do {
             let decoder = JSONDecoder()
-            let articleResult = try decoder.decode(Response.self, from: jsonData)
+            let articleResult = try decoder.decode(MostViewedArticleResponse.self, from: jsonData)
             
-            XCTAssertEqual(articleResult.results?.first?.section, "U.S.")
             XCTAssertNotEqual(articleResult.results?.first?.publishedDate, "2018-06-06.")
             client.mockResponse = articleResult
             viewModel.fetchMostViewArticles { (error) in

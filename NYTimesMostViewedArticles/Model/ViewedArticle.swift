@@ -7,14 +7,14 @@
 
 import Foundation
 
-public struct MostViewedArticleResponse: Codable {
+struct MostViewedArticleResponse: Codable {
 
-    public var status: String?
-    public var copyright: String?
-    public var numResults: Int?
-    public var results: [ViewedArticle]?
+    var status: String?
+    var copyright: String?
+    var numResults: Int?
+    var results: [ViewedArticle]?
 
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case status
         case copyright
         case numResults = "num_results"
@@ -22,16 +22,16 @@ public struct MostViewedArticleResponse: Codable {
     }
 }
 
-public struct ViewedArticle: Codable {
-    public var title: String?
-    public var publishedDate: String?
-    public var source: String?
+struct ViewedArticle: Codable {
+    var title: String?
+    var publishedDate: String?
+    var source: String?
+    var _id: Int?
 
-
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case title
         case publishedDate = "published_date"
         case source
-
+        case _id = "id"
     }
 }
