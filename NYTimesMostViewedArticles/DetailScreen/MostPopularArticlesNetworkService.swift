@@ -17,7 +17,7 @@ extension MostPopularArticlesNetworkServiceType {
         urlComponent.scheme = API.scheme
         urlComponent.host = API.host
         urlComponent.path = "\(API.contentURL)/\(period.rawValue).json"
-        urlComponent.queryItems = [URLQueryItem(name: "api-key", value: Keys.nyTimesKey.rawValue)]
+        urlComponent.queryItems = [URLQueryItem(name: "api-key", value: NYTimesKeys.authKey.rawValue)]
         return urlComponent.url!
     }
 }

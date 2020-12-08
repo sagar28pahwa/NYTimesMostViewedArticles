@@ -105,8 +105,12 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
 extension NetworkClientMock: NetworkClientType {
     
     func mockFailURL(period: PeriodSection) -> URL {
-        let string = "\(API.baseURL)/\(API.contentURL)/\(period.rawValue).json?api-key=\(Keys.mockKey.rawValue)"
-        return URL(string: string)!
+        var urlComponent = URLComponents()
+        urlComponent.scheme = API.scheme
+        urlComponent.host = API.host
+        urlComponent.path = "\(API.contentURL)/\(period.rawValue).json"
+        urlComponent.queryItems = [URLQueryItem(name: "api-key", value: NYTimesKeys.mockKey.rawValue)]
+        return urlComponent.url!
     }
 }
 

@@ -11,8 +11,8 @@ protocol NetworkClientType {
     func fetchResponse<T: Codable>(for request: URLRequest, completion: @escaping (T?, Error?)->())
 }
 
-enum Keys: String {
-    case nyTimesKey = "yxPlqAEPWW3qKi0BgofuzzXeEbxkGfj4"
+enum NYTimesKeys: String {
+    case authKey = "yxPlqAEPWW3qKi0BgofuzzXeEbxkGfj4"
     case mockKey = "1234567890"
 }
 
