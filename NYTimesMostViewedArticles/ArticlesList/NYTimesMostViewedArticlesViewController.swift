@@ -44,7 +44,7 @@ class NYTimesMostViewedArticlesViewController: UIViewController {
     }
     
     func showDetail(for article: ArticleRepresentable) {
-        if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: NYTimesArticleDetailViewController.identifier) as? ArticleDetailView {
+        if let articleDetailVC = UIStoryboard.get(viewController: NYTimesArticleDetailViewController.self, storyboard: .main) {
             articleDetailVC.viewModel = NYTimesArticleDetailViewModel(article: article)
             push(viewController: articleDetailVC, animated: true)
         }
