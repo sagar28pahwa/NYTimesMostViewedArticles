@@ -13,18 +13,18 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
     var viewModel: NYTimesMostViewedArticleViewModel!
     var session: URLSession!
     var client = NetworkClientMock(response: nil)
-    var api: MostPopularArticlesNetworkServiceType!
+    var apiService: MostPopularArticlesNetworkServiceType!
     
     override func setUpWithError() throws {
         session = URLSession(configuration: URLSessionConfiguration.default)
-        api = MostPopularArticlesNetworkService(client: client)
-        viewModel = NYTimesMostViewedArticleViewModel(api: api)
+        apiService = MostPopularArticlesNetworkService(client: client)
+        viewModel = NYTimesMostViewedArticleViewModel(apiService: apiService)
     }
     
     override func tearDownWithError() throws {
         session = nil
         client.mockResponse = nil
-        api = nil
+        apiService = nil
         viewModel = nil
     }
     

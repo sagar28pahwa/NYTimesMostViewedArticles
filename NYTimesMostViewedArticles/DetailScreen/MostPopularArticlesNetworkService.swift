@@ -20,7 +20,7 @@ extension MostPopularArticlesNetworkServiceType {
 
 class MostPopularArticlesNetworkService: MostPopularArticlesNetworkServiceType {
     
-    let client: NetworkClientType
+    private let client: NetworkClientType
     
     init(client: NetworkClientType) {
         self.client = client

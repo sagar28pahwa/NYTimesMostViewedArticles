@@ -11,16 +11,16 @@ import UIKit
 
 class NYTimesMostViewedArticleViewModel {
     
-    let api: MostPopularArticlesNetworkServiceType
+    private let apiService: MostPopularArticlesNetworkServiceType
     
     private(set) var articles = [NYTimesViewedArticle]()
     
-    init(api: MostPopularArticlesNetworkServiceType) {
-        self.api = api
+    init(apiService: MostPopularArticlesNetworkServiceType) {
+        self.apiService = apiService
     }
     
     func fetchMostViewArticles(period: PeriodSection = .day, completion: @escaping (Error?)->()) {
-        api.getMostViewedArticles(period: period) { [weak self] (response, error) in
+        apiService.getMostViewedArticles(period: period) { [weak self] (response, error) in
             DispatchQueue.main.async {
              if let articleResults = response?.results {
                     self?.articles = articleResults

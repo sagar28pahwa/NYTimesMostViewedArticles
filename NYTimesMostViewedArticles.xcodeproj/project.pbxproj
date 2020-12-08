@@ -248,6 +248,7 @@
 			children = (
 				2B65B68A256441990059B182 /* NYTimesArticleDetailViewController.swift */,
 				2B65B68C256444E80059B182 /* NYTimesArticleDetailViewModel.swift */,
+				2BFBA683256E85920036F1A6 /* MostPopularArticlesNetworkService.swift */,
 			);
 			path = DetailScreen;
 			sourceTree = "<group>";
@@ -255,7 +256,6 @@
 		2BFBA682256E85770036F1A6 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				2BFBA683256E85920036F1A6 /* MostPopularArticlesNetworkService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
