@@ -8,9 +8,9 @@
 import UIKit
 
 extension UIViewController: UIViewControllerType {
-    func push(vc: UIViewControllerType, animated: Bool) {
-        if let vc = vc as? UIViewController {
-            navigationController?.pushViewController(vc, animated: animated)
+    func push(viewController: UIViewControllerType, animated: Bool) {
+        if let viewController = viewController as? UIViewController {
+            navigationController?.pushViewController(viewController, animated: animated)
         }
     }
 }
@@ -35,8 +35,6 @@ class NYTimesMostViewedArticleViewController: UIViewController {
     
     func configureUI() {
         tableView.register(UINib(nibName: cellNibName, bundle: Bundle.init(for: ViewedArticleCell.self)), forCellReuseIdentifier: cellNibName)
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.isAccessibilityElement = true
         tableView.accessibilityIdentifier = "ViewedArticleTableView"
         tableView.tableFooterView = UIView(frame: .zero)
@@ -92,7 +90,7 @@ extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableVi
         tableView.deselectRow(at: indexPath, animated: true)
         if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailView {
             articleDetailVC.viewModel = ArticleDetailViewModel(article: viewModel.articles[indexPath.row])
-            push(vc: articleDetailVC, animated: true)
+            push(viewController: articleDetailVC, animated: true)
         }
     }
 }

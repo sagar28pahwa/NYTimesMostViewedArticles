@@ -22,7 +22,6 @@ class ArticleDetailViewController: UIViewController, ArticleDetailView {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        configureAccessibility()
         viewModel.viewDidLoad()
     }
 
@@ -33,11 +32,5 @@ class ArticleDetailViewController: UIViewController, ArticleDetailView {
         titleLabel.accessibilityIdentifier = "titleLabel"
         source.accessibilityIdentifier = "sourceLabel"
         date.accessibilityIdentifier = "dateLabel"
-    }
-    
-    func configureAccessibility() {
-        titleLabel.isAccessibilityElement = true
-        source.isAccessibilityElement = true
-        date.isAccessibilityElement = true
     }
 }

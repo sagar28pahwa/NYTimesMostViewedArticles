@@ -8,7 +8,7 @@
 import Foundation
 
 protocol UIViewControllerType: AnyObject {
-    func push(vc: UIViewControllerType, animated: Bool)
+    func push(viewController: UIViewControllerType, animated: Bool)
 }
 
 protocol ArticleRepresentable {
