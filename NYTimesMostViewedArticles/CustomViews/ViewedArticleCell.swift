@@ -25,13 +25,8 @@ class ViewedArticleCell: UITableViewCell {
     }
     
     func configureAccessibility() {
-        titleLabel.isAccessibilityElement = true
         titleLabel.accessibilityIdentifier = "ViewArticleCellTitle"
-        
-        byNameLabel.isAccessibilityElement = true
         byNameLabel.accessibilityIdentifier = "ViewArticleCellSource"
-        
-        publishedDateLabel.isAccessibilityElement = true
         publishedDateLabel.accessibilityIdentifier = "ViewArticleCellPublishedDate"
     }
 }

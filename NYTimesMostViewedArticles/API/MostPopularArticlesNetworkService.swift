@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MostPopularArticlesNetworkServiceType {
-    func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?)->())
+    func getMostViewedArticles(period: PeriodSection, completion: @escaping (MostViewedArticleResponse?, Error?)->())
 }
 
 extension MostPopularArticlesNetworkServiceType {
@@ -26,10 +26,10 @@ class MostPopularArticlesNetworkService: MostPopularArticlesNetworkServiceType {
         self.client = client
     }
     
-    func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?)->()) {
+    func getMostViewedArticles(period: PeriodSection, completion: @escaping (MostViewedArticleResponse?, Error?)->()) {
         var request = URLRequest(url: MostPopularArticlesNetworkService.url(period: period))
         request.httpMethod = "GET"
-        client.fetchResponse(for: request) { (response: Response?, error) in
+        client.fetchResponse(for: request) { (response: MostViewedArticleResponse?, error) in
             completion(response, error)
         }
     }
