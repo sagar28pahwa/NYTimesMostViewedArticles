@@ -19,8 +19,8 @@ class NYTimesMostViewedArticleViewModel {
         self.api = api
     }
     
-    func fetchMostViewArticles(completion: @escaping (Error?)->()) {
-        api.getMostViewedArticles(period: .day) { [weak self] (response, error) in
+    func fetchMostViewArticles(period: PeriodSection = .day, completion: @escaping (Error?)->()) {
+        api.getMostViewedArticles(period: period) { [weak self] (response, error) in
             DispatchQueue.main.async {
              if let articleResults = response?.results {
                     self?.articles = articleResults
