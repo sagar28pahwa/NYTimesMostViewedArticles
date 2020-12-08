@@ -7,14 +7,6 @@
 
 import UIKit
 
-extension UIViewController: UIViewControllerType {
-    func push(viewController: UIViewControllerType, animated: Bool) {
-        if let viewController = viewController as? UIViewController {
-            navigationController?.pushViewController(viewController, animated: animated)
-        }
-    }
-}
-
 class NYTimesMostViewedArticleViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     

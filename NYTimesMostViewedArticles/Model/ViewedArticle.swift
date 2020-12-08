@@ -7,6 +7,12 @@
 
 import Foundation
 
+protocol ArticleRepresentable {
+    var title: String? { get }
+    var author: String? { get }
+    var date: String? { get }
+}
+
 struct MostViewedArticleResponse: Codable {
 
     var status: String?
@@ -33,5 +39,15 @@ struct ViewedArticle: Codable {
         case publishedDate = "published_date"
         case source
         case _id = "id"
+    }
+}
+
+extension ViewedArticle: ArticleRepresentable {
+    var author: String? {
+        return source
+    }
+    
+    var date: String? {
+        return publishedDate
     }
 }

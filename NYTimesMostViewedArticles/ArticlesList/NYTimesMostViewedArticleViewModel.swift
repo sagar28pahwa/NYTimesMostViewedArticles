@@ -8,16 +8,6 @@
 import Foundation
 import UIKit
 
-extension ViewedArticle: ArticleRepresentable {
-    var author: String? {
-        return source
-    }
-    
-    var date: String? {
-        return publishedDate
-    }
-}
-
 
 class NYTimesMostViewedArticleViewModel {
     
