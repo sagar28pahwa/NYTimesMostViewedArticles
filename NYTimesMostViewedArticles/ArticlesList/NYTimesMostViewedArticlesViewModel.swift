@@ -8,29 +8,34 @@
 import Foundation
 import UIKit
 
+protocol MostViewedArticlesListView: AnyObject {
+    func updateUI(error: Error?)
+    func startShowingLoading()
+    func stopShowingLoading()
+    func showDetail(for article: ArticleRepresentable)
+}
 
-class NYTimesMostViewedArticleViewModel {
+class NYTimesMostViewedArticlesViewModel {
     
     private let apiService: MostPopularArticlesNetworkServiceType
     
     private(set) var articles = [NYTimesViewedArticle]()
     
-    private weak var view: MostViewedArticlesListView?
+    weak var view: MostViewedArticlesListView?
     
-    init(apiService: MostPopularArticlesNetworkServiceType, view: MostViewedArticlesListView) {
+    init(apiService: MostPopularArticlesNetworkServiceType) {
         self.apiService = apiService
-        self.view = view
     }
     
     func viewDidLoad(period: PeriodSection = .day) {
-        self.view?.startShowingLoading()
-        self.fetchMostViewArticles(period: period) { [weak self] (error) in
-            self?.view?.stopShowingLoading()
+        view?.startShowingLoading()
+        fetchMostViewArticles(period: period) { [weak self] (error) in
             self?.view?.updateUI(error: error)
+            self?.view?.stopShowingLoading()
         }
     }
     
-    private func fetchMostViewArticles(period: PeriodSection, completion: @escaping (Error?)->()) {
+    func fetchMostViewArticles(period: PeriodSection, completion: @escaping (Error?)->()) {
         apiService.getMostViewedArticles(period: period) { [weak self] (response, error) in
              if let articleResults = response?.results {
                     self?.articles = articleResults
@@ -40,5 +45,9 @@ class NYTimesMostViewedArticleViewModel {
                 completion(error)
              }
         }
+    }
+    
+    func didSelectArticle(at index: Int) {
+        view?.showDetail(for: articles[index])
     }
 }

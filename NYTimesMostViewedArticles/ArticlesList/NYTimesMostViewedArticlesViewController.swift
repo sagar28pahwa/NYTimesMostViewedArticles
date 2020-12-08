@@ -7,21 +7,17 @@
 
 import UIKit
 
-protocol MostViewedArticlesListView: AnyObject {
-    func updateUI(error: Error?)
-    func startShowingLoading()
-    func stopShowingLoading()
-}
-
-class NYTimesMostViewedArticleViewController: UIViewController {
+class NYTimesMostViewedArticlesViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     let cellNibName = "NYTimesMostViewedArticleCell"
     
-    lazy var viewModel: NYTimesMostViewedArticleViewModel = {
-        return NYTimesMostViewedArticleViewModel(apiService: MostPopularArticlesNetworkService(client: NetworkClient()), view: self)
+    lazy var viewModel: NYTimesMostViewedArticlesViewModel = {
+        var viewModel = NYTimesMostViewedArticlesViewModel(apiService: MostPopularArticlesNetworkService(client: NetworkClient()))
+        viewModel.view = self
+        return viewModel
     }()
 
     override func viewDidLoad() {
@@ -44,11 +40,18 @@ class NYTimesMostViewedArticleViewController: UIViewController {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertAction)
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showDetail(for article: ArticleRepresentable) {
+        if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: NYTimesArticleDetailViewController.identifier) as? ArticleDetailView {
+            articleDetailVC.viewModel = NYTimesArticleDetailViewModel(article: article)
+            push(viewController: articleDetailVC, animated: true)
+        }
     }
 }
 
-extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableViewDataSource {
+extension NYTimesMostViewedArticlesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.articles.count
     }
@@ -62,14 +65,11 @@ extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailView {
-            articleDetailVC.viewModel = NYTimesArticleDetailViewModel(article: viewModel.articles[indexPath.row])
-            push(viewController: articleDetailVC, animated: true)
-        }
+        viewModel.didSelectArticle(at: indexPath.row)
     }
 }
 
-extension NYTimesMostViewedArticleViewController: MostViewedArticlesListView {
+extension NYTimesMostViewedArticlesViewController: MostViewedArticlesListView {
  
     func startShowingLoading() {
         activityIndicator.startAnimating()
@@ -81,13 +81,13 @@ extension NYTimesMostViewedArticleViewController: MostViewedArticlesListView {
     
     func updateUI(error: Error?) {
         if let error = error as? MockErrors {
-            self.showAlert(message: error.localizedDescription)
+            showAlert(message: error.localizedDescription)
         }
         else if let error = error {
-            self.showAlert(message: error.localizedDescription)
+            showAlert(message: error.localizedDescription)
         }
         else {
-            self.tableView.reloadData()
+            tableView.reloadData()
         }
     }
 }

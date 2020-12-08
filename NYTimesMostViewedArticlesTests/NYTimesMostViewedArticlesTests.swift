@@ -10,15 +10,18 @@ import XCTest
 
 class NYTimesMostViewedArticlesTests: XCTestCase {
 
-    var viewModel: NYTimesMostViewedArticleViewModel!
+    var viewModel: NYTimesMostViewedArticlesViewModel!
     var session: URLSession!
     var client = NetworkClientMock(response: nil)
     var apiService: MostPopularArticlesNetworkServiceType!
+    var mockView: MockArticleListView!
     
     override func setUpWithError() throws {
         session = URLSession(configuration: URLSessionConfiguration.default)
         apiService = MostPopularArticlesNetworkService(client: client)
-        viewModel = NYTimesMostViewedArticleViewModel(apiService: apiService)
+        mockView = MockArticleListView()
+        viewModel = NYTimesMostViewedArticlesViewModel(apiService: apiService)
+        viewModel.view = mockView
     }
     
     override func tearDownWithError() throws {
@@ -26,6 +29,7 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
         client.mockResponse = nil
         apiService = nil
         viewModel = nil
+        mockView = nil
     }
     
     func testAPISuccess() {
@@ -82,12 +86,15 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
             
             XCTAssertNotEqual(articleResult.results?.first?.publishedDate, "2018-06-06.")
             client.mockResponse = articleResult
-            viewModel.fetchMostViewArticles { (error) in
-               XCTAssertNil(error)
-                if self.viewModel.articles.first?._id == 100000005964396 {
-                    promise.fulfill()
+            viewModel.fetchMostViewArticles(period: .day, completion: { [weak self] (error) in
+                XCTAssertNil(error)
+                if self?.viewModel.articles.first?._id == 100000005964396 {
+                     promise.fulfill()
                 }
-            }
+                XCTAssertNil(self?.mockView.articleSelected)
+                self?.viewModel.didSelectArticle(at: 0)
+                XCTAssertNotNil(self?.mockView.articleSelected)
+            })
         }
         catch {
             XCTFail(error.localizedDescription)
@@ -95,8 +102,14 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
     }
     
+    func testViewUpdation() {
+        XCTAssertTrue(mockView.loaderState == .notInitiated)
+        viewModel.viewDidLoad()
+        XCTAssertTrue(mockView.loaderState == .showingLoader)
+    }
+    
     func testClientError() {
-        viewModel.fetchMostViewArticles { (error) in
+        viewModel.fetchMostViewArticles(period: .day) { (error) in
             XCTAssertNotNil(error as? MockErrors)
         }
     }

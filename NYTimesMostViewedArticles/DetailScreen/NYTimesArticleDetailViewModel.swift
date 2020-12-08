@@ -35,6 +35,6 @@ class NYTimesArticleDetailViewModel {
     }
     
     func viewDidLoad() {
-        self.view?.configureUI()
+        view?.configureUI()
     }
 }
