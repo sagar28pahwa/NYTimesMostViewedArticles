@@ -32,11 +32,17 @@ class MostPopularArticlesNetworkService: MostPopularArticlesNetworkServiceType {
     
     func getMostViewedArticles(period: PeriodSection, completion: @escaping (MostViewedArticleResponse?, Error?)->()) {
         var request = URLRequest(url: MostPopularArticlesNetworkService.url(period: period))
-        request.httpMethod = "GET"
+        request.httpMethod = URLRequest.HttpMethod.get.rawValue
         client.fetchResponse(for: request) { (response: MostViewedArticleResponse?, error) in
             DispatchQueue.main.async {
                 completion(response, error)
             }
         }
+    }
+}
+
+extension URLRequest {
+    enum HttpMethod: String {
+        case get = "GET"
     }
 }
