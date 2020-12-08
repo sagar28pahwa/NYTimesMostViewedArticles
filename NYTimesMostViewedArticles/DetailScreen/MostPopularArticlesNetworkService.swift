@@ -13,8 +13,12 @@ protocol MostPopularArticlesNetworkServiceType {
 
 extension MostPopularArticlesNetworkServiceType {
     static func url(period: PeriodSection) -> URL {
-        let string = "\(API.baseURL)/\(API.contentURL)/\(period.rawValue).json?api-key=\(Keys.nyTimesKey.rawValue)"
-        return URL(string: string)!
+        var urlComponent = URLComponents()
+        urlComponent.scheme = API.scheme
+        urlComponent.host = API.host
+        urlComponent.path = "\(API.contentURL)/\(period.rawValue).json"
+        urlComponent.queryItems = [URLQueryItem(name: "api-key", value: Keys.nyTimesKey.rawValue)]
+        return urlComponent.url!
     }
 }
 

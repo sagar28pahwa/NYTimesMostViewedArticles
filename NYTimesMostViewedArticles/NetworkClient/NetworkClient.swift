@@ -23,8 +23,9 @@ enum PeriodSection: Int {
 }
 
 struct API {
-    static let baseURL = "http://api.nytimes.com/"
-    static let contentURL = "svc/mostpopular/v2/viewed"
+    static let scheme = "http"
+    static let host = "api.nytimes.com"
+    static let contentURL = "/svc/mostpopular/v2/viewed"
         //"svc/mostpopular/v2/mostviewed/all-sections/"
 }
 
