@@ -8,11 +8,11 @@
 import Foundation
 
 protocol ArticleDetailView: UIViewControllerType {
-    var viewModel: ArticleDetailViewModel! { get set }
+    var viewModel: NYTimesArticleDetailViewModel! { get set }
     func configureUI()
 }
 
-class ArticleDetailViewModel {
+class NYTimesArticleDetailViewModel {
     
     let article: ArticleRepresentable
     

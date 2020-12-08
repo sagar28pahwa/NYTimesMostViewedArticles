@@ -13,7 +13,7 @@ class NYTimesMostViewedArticleViewModel {
     
     let api: MostPopularArticlesNetworkServiceType
     
-    private(set) var articles = [ViewedArticle]()
+    private(set) var articles = [NYTimesViewedArticle]()
     
     init(api: MostPopularArticlesNetworkServiceType) {
         self.api = api

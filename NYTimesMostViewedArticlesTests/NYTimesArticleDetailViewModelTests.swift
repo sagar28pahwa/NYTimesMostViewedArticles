@@ -7,14 +7,14 @@
 
 import XCTest
 
-class ArticleDetailViewModelTests: XCTestCase {
+class NYTimesArticleDetailViewModelTests: XCTestCase {
     
-    var viewModel: ArticleDetailViewModel!
+    var viewModel: NYTimesArticleDetailViewModel!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         if let article = getArticle() {
-            viewModel = ArticleDetailViewModel(article: article)
+            viewModel = NYTimesArticleDetailViewModel(article: article)
         }
         else {
             XCTFail()
@@ -27,7 +27,7 @@ class ArticleDetailViewModelTests: XCTestCase {
     }
     
     func getArticle() -> ArticleRepresentable? {
-        guard let urlPath = Bundle(for: NYTimesMostViewedArticlesTests.self).url(forResource: "MockArticles", withExtension: "json"), let jsonData = try? Data(contentsOf: urlPath) else {
+        guard let urlPath = Bundle(for: NYTimesMostViewedArticlesTests.self).url(forResource: "NYTimesMostViewedMockArticles", withExtension: "json"), let jsonData = try? Data(contentsOf: urlPath) else {
             XCTFail("JSON file is missing")
             return nil
         }

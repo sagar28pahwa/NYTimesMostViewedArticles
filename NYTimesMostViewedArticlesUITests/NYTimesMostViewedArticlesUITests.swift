@@ -26,7 +26,7 @@ class NYTimesMostViewedArticlesUITests: XCTestCase {
     }
     
     func getData() -> Data? {
-        guard let urlPath = Bundle(for: NetworkClientMock.self).url(forResource: "MockArticles", withExtension: "json"),
+        guard let urlPath = Bundle(for: NetworkClientMock.self).url(forResource: "NYTimesMostViewedMockArticles", withExtension: "json"),
               let jsonData = try? Data(contentsOf: urlPath) else {
             XCTFail("JSON file is missing")
             return nil
@@ -45,7 +45,7 @@ class NYTimesMostViewedArticlesUITests: XCTestCase {
         let viewedArticleTableView = app.tables.matching(identifier: "ViewedArticleTableView")
         let indexPath = getIndexPath()
         XCTAssertEqual(viewedArticleTableView.cells.count, 2)
-        let cell = viewedArticleTableView.cells.element(matching: .cell, identifier: "ViewedArticleCell_\(indexPath.row)")
+        let cell = viewedArticleTableView.cells.element(matching: .cell, identifier: "NYTimesMostViewedArticleCell_\(indexPath.row)")
         
         let title = "Trump Retreats on Separating Families, but Thousands May Remain Apart"
         let publishedBy = "The New York Times"

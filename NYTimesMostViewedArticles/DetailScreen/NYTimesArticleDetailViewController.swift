@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ArticleDetailViewController: UIViewController, ArticleDetailView {
+class NYTimesArticleDetailViewController: UIViewController, ArticleDetailView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var source: UILabel!
     @IBOutlet weak var date: UILabel!
     
-    var viewModel: ArticleDetailViewModel! {
+    var viewModel: NYTimesArticleDetailViewModel! {
         didSet {
             viewModel.view = self
         }

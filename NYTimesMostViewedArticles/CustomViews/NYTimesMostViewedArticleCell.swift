@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewedArticleCell: UITableViewCell {
+class NYTimesMostViewedArticleCell: UITableViewCell {
     
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var byNameLabel: UILabel!
@@ -21,10 +21,10 @@ class ViewedArticleCell: UITableViewCell {
         titleLabel.text = model.title
         byNameLabel.text = model.author
         publishedDateLabel.text = model.date
-        isAccessibilityElement = true
     }
     
     func configureAccessibility() {
+        isAccessibilityElement = true
         titleLabel.accessibilityIdentifier = "ViewArticleCellTitle"
         byNameLabel.accessibilityIdentifier = "ViewArticleCellSource"
         publishedDateLabel.accessibilityIdentifier = "ViewArticleCellPublishedDate"

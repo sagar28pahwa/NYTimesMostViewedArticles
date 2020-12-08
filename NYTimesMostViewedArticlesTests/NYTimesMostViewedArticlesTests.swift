@@ -71,7 +71,7 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
     }
     
     func testClientMockSuccess() {
-        guard let urlPath = Bundle(for: NYTimesMostViewedArticlesTests.self).url(forResource: "MockArticles", withExtension: "json"), let jsonData = try? Data(contentsOf: urlPath) else {
+        guard let urlPath = Bundle(for: NYTimesMostViewedArticlesTests.self).url(forResource: "NYTimesMostViewedMockArticles", withExtension: "json"), let jsonData = try? Data(contentsOf: urlPath) else {
             XCTFail("JSON file is missing")
             return
         }

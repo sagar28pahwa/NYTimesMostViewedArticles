@@ -66,10 +66,10 @@
             </objects>
             <point key="canvasLocation" x="139" y="121"/>
         </scene>
-        <!--Article Detail View Controller-->
+        <!--Times Article Detail View Controller-->
         <scene sceneID="krZ-LP-8xw">
             <objects>
-                <viewController storyboardIdentifier="ArticleDetailVC" id="VKy-Wr-2If" customClass="ArticleDetailViewController" customModule="NYTimesMostViewedArticles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticleDetailVC" id="VKy-Wr-2If" customClass="NYTimesArticleDetailViewController" customModule="NYTimesMostViewedArticles" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3c1-Kd-6pp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

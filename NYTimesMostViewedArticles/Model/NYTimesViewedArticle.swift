@@ -18,7 +18,7 @@ struct MostViewedArticleResponse: Codable {
     var status: String?
     var copyright: String?
     var numResults: Int?
-    var results: [ViewedArticle]?
+    var results: [NYTimesViewedArticle]?
 
     enum CodingKeys: String, CodingKey {
         case status
@@ -28,7 +28,7 @@ struct MostViewedArticleResponse: Codable {
     }
 }
 
-struct ViewedArticle: Codable {
+struct NYTimesViewedArticle: Codable {
     var title: String?
     var publishedDate: String?
     var source: String?
@@ -42,7 +42,7 @@ struct ViewedArticle: Codable {
     }
 }
 
-extension ViewedArticle: ArticleRepresentable {
+extension NYTimesViewedArticle: ArticleRepresentable {
     var author: String? {
         return source
     }

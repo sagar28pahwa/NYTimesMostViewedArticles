@@ -12,7 +12,7 @@ class NYTimesMostViewedArticleViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    let cellNibName = "ViewedArticleCell"
+    let cellNibName = "NYTimesMostViewedArticleCell"
     
     lazy var viewModel: NYTimesMostViewedArticleViewModel = {
         return NYTimesMostViewedArticleViewModel(api: MostPopularArticlesNetworkService(client: NetworkClient()))
@@ -26,7 +26,7 @@ class NYTimesMostViewedArticleViewController: UIViewController {
     }
     
     func configureUI() {
-        tableView.register(UINib(nibName: cellNibName, bundle: Bundle.init(for: ViewedArticleCell.self)), forCellReuseIdentifier: cellNibName)
+        tableView.register(UINib(nibName: cellNibName, bundle: Bundle.init(for: NYTimesMostViewedArticleCell.self)), forCellReuseIdentifier: cellNibName)
         tableView.isAccessibilityElement = true
         tableView.accessibilityIdentifier = "ViewedArticleTableView"
         tableView.tableFooterView = UIView(frame: .zero)
@@ -72,7 +72,7 @@ extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellNibName, for: indexPath) as! ViewedArticleCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellNibName, for: indexPath) as! NYTimesMostViewedArticleCell
         cell.accessibilityLabel = "\(cellNibName)_\(indexPath.row)"
         cell.configureUI(model: viewModel.articles[indexPath.row])
         return cell
@@ -81,7 +81,7 @@ extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if let articleDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "ArticleDetailVC") as? ArticleDetailView {
-            articleDetailVC.viewModel = ArticleDetailViewModel(article: viewModel.articles[indexPath.row])
+            articleDetailVC.viewModel = NYTimesArticleDetailViewModel(article: viewModel.articles[indexPath.row])
             push(viewController: articleDetailVC, animated: true)
         }
     }
