@@ -8,9 +8,9 @@
 import UIKit
 
 class NYTimesMostViewedArticleViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     let cellNibName = "NYTimesMostViewedArticleCell"
     
