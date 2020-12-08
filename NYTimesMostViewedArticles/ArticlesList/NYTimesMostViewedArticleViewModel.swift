@@ -15,11 +15,22 @@ class NYTimesMostViewedArticleViewModel {
     
     private(set) var articles = [NYTimesViewedArticle]()
     
-    init(apiService: MostPopularArticlesNetworkServiceType) {
+    private weak var view: MostViewedArticlesListView?
+    
+    init(apiService: MostPopularArticlesNetworkServiceType, view: MostViewedArticlesListView) {
         self.apiService = apiService
+        self.view = view
     }
     
-    func fetchMostViewArticles(period: PeriodSection = .day, completion: @escaping (Error?)->()) {
+    func viewDidLoad(period: PeriodSection = .day) {
+        self.view?.startShowingLoading()
+        self.fetchMostViewArticles(period: period) { [weak self] (error) in
+            self?.view?.stopShowingLoading()
+            self?.view?.updateUI(error: error)
+        }
+    }
+    
+    private func fetchMostViewArticles(period: PeriodSection, completion: @escaping (Error?)->()) {
         apiService.getMostViewedArticles(period: period) { [weak self] (response, error) in
              if let articleResults = response?.results {
                     self?.articles = articleResults

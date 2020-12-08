@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol MostViewedArticlesListView: AnyObject {
+    func updateUI(error: Error?)
+    func startShowingLoading()
+    func stopShowingLoading()
+}
+
 class NYTimesMostViewedArticleViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
@@ -15,14 +21,14 @@ class NYTimesMostViewedArticleViewController: UIViewController {
     let cellNibName = "NYTimesMostViewedArticleCell"
     
     lazy var viewModel: NYTimesMostViewedArticleViewModel = {
-        return NYTimesMostViewedArticleViewModel(apiService: MostPopularArticlesNetworkService(client: NetworkClient()))
+        return NYTimesMostViewedArticleViewModel(apiService: MostPopularArticlesNetworkService(client: NetworkClient()), view: self)
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configureUI()
-        fetchMostViewedArticles()
+        viewModel.viewDidLoad()
     }
     
     func configureUI() {
@@ -34,35 +40,11 @@ class NYTimesMostViewedArticleViewController: UIViewController {
         activityIndicator.style = .large
     }
     
-    func fetchMostViewedArticles() {
-        startShowingLoading()
-        viewModel.fetchMostViewArticles { [weak self] (error) in
-            self?.stopShowingLoading()
-            if let error = error as? MockErrors {
-                self?.showAlert(message: error.localizedDescription)
-            }
-            else if let error = error {
-                self?.showAlert(message: error.localizedDescription)
-            }
-            else {
-                self?.tableView.reloadData()
-            }
-        }
-    }
-    
     func showAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(alertAction)
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    func startShowingLoading() {
-        activityIndicator.startAnimating()
-    }
-    
-    func stopShowingLoading() {
-        activityIndicator.stopAnimating()
     }
 }
 
@@ -87,3 +69,25 @@ extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableVi
     }
 }
 
+extension NYTimesMostViewedArticleViewController: MostViewedArticlesListView {
+ 
+    func startShowingLoading() {
+        activityIndicator.startAnimating()
+    }
+    
+    func stopShowingLoading() {
+        activityIndicator.stopAnimating()
+    }
+    
+    func updateUI(error: Error?) {
+        if let error = error as? MockErrors {
+            self.showAlert(message: error.localizedDescription)
+        }
+        else if let error = error {
+            self.showAlert(message: error.localizedDescription)
+        }
+        else {
+            self.tableView.reloadData()
+        }
+    }
+}
