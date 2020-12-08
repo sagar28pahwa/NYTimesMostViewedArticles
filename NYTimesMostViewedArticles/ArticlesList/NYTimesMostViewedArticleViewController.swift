@@ -23,7 +23,7 @@ class NYTimesMostViewedArticleViewController: UIViewController {
     let cellNibName = "ViewedArticleCell"
     
     lazy var viewModel: NYTimesMostViewedArticleViewModel = {
-        return NYTimesMostViewedArticleViewModel(api: ArticlesAPI(client: NetworkClient()))
+        return NYTimesMostViewedArticleViewModel(api: MostPopularArticlesNetworkService(client: NetworkClient()))
     }()
 
     override func viewDidLoad() {

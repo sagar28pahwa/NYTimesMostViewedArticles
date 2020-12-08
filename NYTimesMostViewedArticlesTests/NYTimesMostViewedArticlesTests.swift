@@ -13,11 +13,11 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
     var viewModel: NYTimesMostViewedArticleViewModel!
     var session: URLSession!
     var client = NetworkClientMock(response: nil)
-    var api: ArticlesAPI!
+    var api: MostPopularArticlesNetworkServiceType!
     
     override func setUpWithError() throws {
         session = URLSession(configuration: URLSessionConfiguration.default)
-        api = ArticlesAPI(client: client)
+        api = MostPopularArticlesNetworkService(client: client)
         viewModel = NYTimesMostViewedArticleViewModel(api: api)
     }
     
@@ -30,7 +30,7 @@ class NYTimesMostViewedArticlesTests: XCTestCase {
     
     func testAPISuccess() {
         
-        let url = ArticlesAPI.url(period: .day)
+        let url = MostPopularArticlesNetworkService.url(period: .day)
         
         let promise = expectation(description: "Status code: 200")
         

@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol ArticlesAPIType {
+protocol MostPopularArticlesNetworkServiceType {
     func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?)->())
 }
 
-extension ArticlesAPIType {
+extension MostPopularArticlesNetworkServiceType {
     static func url(period: PeriodSection) -> URL {
         let string = "\(API.baseURL)/\(API.contentURL)/\(period.rawValue).json?api-key=\(Keys.nyTimesKey.rawValue)"
         return URL(string: string)!
     }
 }
 
-class ArticlesAPI: ArticlesAPIType {
+class MostPopularArticlesNetworkService: MostPopularArticlesNetworkServiceType {
     
     let client: NetworkClientType
     
@@ -27,7 +27,7 @@ class ArticlesAPI: ArticlesAPIType {
     }
     
     func getMostViewedArticles(period: PeriodSection, completion: @escaping (Response?, Error?)->()) {
-        var request = URLRequest(url: ArticlesAPI.url(period: period))
+        var request = URLRequest(url: MostPopularArticlesNetworkService.url(period: period))
         request.httpMethod = "GET"
         client.fetchResponse(for: request) { (response: Response?, error) in
             completion(response, error)

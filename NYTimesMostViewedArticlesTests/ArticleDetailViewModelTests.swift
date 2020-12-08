@@ -40,9 +40,9 @@ class ArticleDetailViewModelTests: XCTestCase {
     }
     
     func testViewDetail() {
-        XCTAssertEqual(viewModel.source(), "The New York Times")
-        XCTAssertEqual(viewModel.title(), "Trump Retreats on Separating Families, but Thousands May Remain Apart")
-        XCTAssertEqual(viewModel.date(), "2018-06-20")
+        XCTAssertEqual(viewModel.source, "The New York Times")
+        XCTAssertEqual(viewModel.title, "Trump Retreats on Separating Families, but Thousands May Remain Apart")
+        XCTAssertEqual(viewModel.date, "2018-06-20")
     }
 
 }

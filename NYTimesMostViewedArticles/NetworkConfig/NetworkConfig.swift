@@ -53,7 +53,7 @@ class URLProtocolMock: URLProtocol {
     override func startLoading() {
         if let dataString = ProcessInfo.processInfo.environment["MockResponse"] {
             
-            if let response = HTTPURLResponse(url: ArticlesAPI.url(period: .day), statusCode: 200, httpVersion: nil, headerFields: ["Content-Type": "application/json"]) {
+            if let response = HTTPURLResponse(url: MostPopularArticlesNetworkService.url(period: .day), statusCode: 200, httpVersion: nil, headerFields: ["Content-Type": "application/json"]) {
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         }
         

@@ -27,9 +27,9 @@ class ArticleDetailViewController: UIViewController, ArticleDetailView {
     }
 
     func configureUI() {
-        titleLabel.text = viewModel.title()
-        source.text = viewModel.source()
-        date.text = viewModel.date()
+        titleLabel.text = viewModel.title
+        source.text = viewModel.source
+        date.text = viewModel.date
         titleLabel.accessibilityIdentifier = "titleLabel"
         source.accessibilityIdentifier = "sourceLabel"
         date.accessibilityIdentifier = "dateLabel"

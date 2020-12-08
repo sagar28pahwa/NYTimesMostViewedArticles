@@ -21,11 +21,11 @@ extension ViewedArticle: ArticleRepresentable {
 
 class NYTimesMostViewedArticleViewModel {
     
-    let api: ArticlesAPIType
+    let api: MostPopularArticlesNetworkServiceType
     
     private(set) var articles = [ViewedArticle]()
     
-    init(api: ArticlesAPIType) {
+    init(api: MostPopularArticlesNetworkServiceType) {
         self.api = api
     }
     
