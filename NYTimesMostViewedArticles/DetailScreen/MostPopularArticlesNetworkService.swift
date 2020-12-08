@@ -30,7 +30,9 @@ class MostPopularArticlesNetworkService: MostPopularArticlesNetworkServiceType {
         var request = URLRequest(url: MostPopularArticlesNetworkService.url(period: period))
         request.httpMethod = "GET"
         client.fetchResponse(for: request) { (response: MostViewedArticleResponse?, error) in
-            completion(response, error)
+            DispatchQueue.main.async {
+                completion(response, error)
+            }
         }
     }
 }
