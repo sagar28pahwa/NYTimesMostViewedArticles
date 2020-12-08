@@ -19,11 +19,14 @@ protocol ArticleRepresentable {
 
 protocol ArticleDetailView: UIViewControllerType {
     var viewModel: ArticleDetailViewModel! { get set }
+    func configureUI()
 }
 
 class ArticleDetailViewModel {
     
     let article: ArticleRepresentable
+    
+    weak var view: ArticleDetailView?
     
     init(article: ArticleRepresentable) {
         self.article = article
@@ -39,5 +42,9 @@ class ArticleDetailViewModel {
     
     func date() -> String? {
         return article.date
+    }
+    
+    func viewDidLoad() {
+        self.view?.configureUI()
     }
 }

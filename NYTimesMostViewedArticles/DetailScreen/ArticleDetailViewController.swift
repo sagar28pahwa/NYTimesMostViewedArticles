@@ -13,16 +13,20 @@ class ArticleDetailViewController: UIViewController, ArticleDetailView {
     @IBOutlet weak var source: UILabel!
     @IBOutlet weak var date: UILabel!
     
-    var viewModel: ArticleDetailViewModel!
+    var viewModel: ArticleDetailViewModel! {
+        didSet {
+            viewModel.view = self
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        configUI()
-        configAccessibility()
+        configureAccessibility()
+        viewModel.viewDidLoad()
     }
 
-    func configUI() {
+    func configureUI() {
         titleLabel.text = viewModel.title()
         source.text = viewModel.source()
         date.text = viewModel.date()
@@ -31,7 +35,7 @@ class ArticleDetailViewController: UIViewController, ArticleDetailView {
         date.accessibilityIdentifier = "dateLabel"
     }
     
-    func configAccessibility() {
+    func configureAccessibility() {
         titleLabel.isAccessibilityElement = true
         source.isAccessibilityElement = true
         date.isAccessibilityElement = true
