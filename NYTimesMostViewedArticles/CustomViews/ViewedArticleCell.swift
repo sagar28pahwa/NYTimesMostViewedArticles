@@ -14,17 +14,17 @@ class ViewedArticleCell: UITableViewCell {
     @IBOutlet private weak var publishedDateLabel: UILabel!
     
     override func awakeFromNib() {
-        configAccessibility()
+        configureAccessibility()
     }
     
-    func configUI(model: ArticleRepresentable) {
+    func configureUI(model: ArticleRepresentable) {
         titleLabel.text = model.title
         byNameLabel.text = model.author
         publishedDateLabel.text = model.date
         isAccessibilityElement = true
     }
     
-    func configAccessibility() {
+    func configureAccessibility() {
         titleLabel.isAccessibilityElement = true
         titleLabel.accessibilityIdentifier = "ViewArticleCellTitle"
         

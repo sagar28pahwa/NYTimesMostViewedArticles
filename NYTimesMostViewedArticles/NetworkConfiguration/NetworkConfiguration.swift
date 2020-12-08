@@ -15,8 +15,8 @@ enum MockErrors: Error {
     }
 }
 
-class Config {
-    static let shared = Config.init()
+class NetworkConfiguration {
+    static let shared = NetworkConfiguration.init()
     
     private init() {
     }

@@ -36,11 +36,11 @@ enum NetworkClientError: Error {
 
 class NetworkClient: NetworkClientType {
     
-    private let config = Config.shared
+    private let configuration = NetworkConfiguration.shared
     
     func fetchResponse<T: Codable>(for request: URLRequest, completion: @escaping (T?, Error?)->()) {
         
-        let task = config.urlSession().dataTask(with: request, completionHandler: { data, response, error in
+        let task = configuration.urlSession().dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 completion(nil, error)
             }

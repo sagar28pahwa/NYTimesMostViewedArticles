@@ -29,11 +29,11 @@ class NYTimesMostViewedArticleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        configUI()
+        configureUI()
         fetchMostViewedArticles()
     }
     
-    func configUI() {
+    func configureUI() {
         tableView.register(UINib(nibName: cellNibName, bundle: Bundle.init(for: ViewedArticleCell.self)), forCellReuseIdentifier: cellNibName)
         tableView.delegate = self
         tableView.dataSource = self
@@ -84,7 +84,7 @@ extension NYTimesMostViewedArticleViewController: UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellNibName, for: indexPath) as! ViewedArticleCell
         cell.accessibilityLabel = "\(cellNibName)_\(indexPath.row)"
-        cell.configUI(model: viewModel.articles[indexPath.row])
+        cell.configureUI(model: viewModel.articles[indexPath.row])
         return cell
     }
     
